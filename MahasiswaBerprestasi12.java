@@ -1,59 +1,103 @@
 public class MahasiswaBerprestasi12 {
-    Mahasiswa12[] listMhs = new Mahasiswa12[5];
-    int idx = 0;
- 
+    
+    Mahasiswa12 [] listMhs = new Mahasiswa12[5];
+    int idx;
 
-    public void tambah(Mahasiswa12 mhs) {
-        listMhs[idx] = mhs;
-        idx++;
-    }
- 
-  
-    public void tampil() {
-        for (int i = 0; i < idx; i++) {
-            listMhs[i].tampilInformasi();
+    void tambah(Mahasiswa12 m) {
+        if (idx < listMhs.length) {
+            listMhs[idx] = m;
+            idx++;
+        } else {
+            System.out.println("Data sudah penuh!!");
         }
     }
- 
-  
-    public void bubbleSort() {
+
+    void tampil() {
+        for (int i = 0; i < idx; i++) { 
+            listMhs[i].tampil();
+            System.out.println("-------------------");
+        }
+    }
+
+    void bubbleSort() {
         for (int i = 0; i < idx - 1; i++) {
-            for (int j = 0; j < idx - 1 - i; j++) {
-                if (listMhs[j].ipk < listMhs[j + 1].ipk) {
-                    Mahasiswa12 temp = listMhs[j];
-                    listMhs[j]       = listMhs[j + 1];
-                    listMhs[j + 1]   = temp;
+            for (int j = 0; j < idx - i - 1; j++) {
+                if (listMhs[j].ipk > listMhs[j+1].ipk) {
+                    Mahasiswa12 tmp = listMhs[j];
+                    listMhs[j] = listMhs[j+1];
+                    listMhs[j+1] = tmp;
                 }
             }
         }
     }
- 
-   
-    public void selectionSort() {
-        for (int i = 0; i < idx - 1; i++) {
+    
+    void selectionSort() {
+        for (int i = 0; i < listMhs.length - 1; i++) {
             int minIdx = i;
-            for (int j = i + 1; j < idx; j++) {
+            for (int j = i + 1; j < listMhs.length; j++) {
                 if (listMhs[j].ipk < listMhs[minIdx].ipk) {
                     minIdx = j;
                 }
             }
-            Mahasiswa12 temp = listMhs[minIdx];
-            listMhs[minIdx]  = listMhs[i];
-            listMhs[i]       = temp;
+            Mahasiswa12 tmp = listMhs[minIdx];
+            listMhs[minIdx] = listMhs[i];
+            listMhs[i] = tmp;
         }
     }
- 
 
-    public void insertionSort() {
-        for (int i = 1; i < idx; i++) {
-            Mahasiswa12 key = listMhs[i];
+    void insertionSort() {
+        for (int i = 1; i < listMhs.length; i++) {
+            Mahasiswa12 temp = listMhs[i];
             int j = i - 1;
-            while (j >= 0 && listMhs[j].ipk > key.ipk) {
+            while (j >= 0 && listMhs[j].ipk > temp.ipk) {
                 listMhs[j + 1] = listMhs[j];
                 j--;
             }
-            listMhs[j + 1] = key;
+            listMhs[j + 1] = temp;
         }
     }
+
+    int sequentialSearching(double cari) {
+        int posisi = -1;
+        for (int j=0; j<listMhs.length; j++) {
+            if (listMhs[j].ipk == cari) {
+                posisi = j;
+                break;
+            }
+        }
+        return posisi;
+    }
+
+    void tampilPosisi(double x, int pos) {
+        if (pos != -1) {
+            System.out.println("Data mahasiswa dengan IPK " + x + " ditemukan pada indeks " + pos);
+        } else {
+            System.out.println("Data mahasiswa dengan IPK " + x + " tidak ditemukan");
+        }
+    }
+
+    void tampilDataSearch(double x, int pos) {
+        if (pos !=-1) {
+            System.out.println("nim\t : " + listMhs[pos].nim);
+            System.out.println("nama\t : " + listMhs[pos].nama);
+            System.out.println("kelas\t : " + listMhs[pos].kelas);
+            System.out.println("ipk\t : " + x);
+        } else {
+            System.out.println("Data mahasiswa dengan IPK " + x + " tidak ditemukan");
+        }
+    }
+    
+    int findBinarySearch(double cari, int left, int right) {
+        int mid;
+        if (right >= left) {
+            mid = (left+right) / 2;
+            if (listMhs[mid].ipk == cari) {
+                return (mid);
+            } else if (listMhs[mid].ipk > cari) {
+                return findBinarySearch(cari, left, mid - 1);
+            }
+            return findBinarySearch(cari, mid + 1, right);
+        }
+        return -1;
+    }
 }
- 
