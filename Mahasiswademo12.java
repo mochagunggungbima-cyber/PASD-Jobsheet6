@@ -1,33 +1,53 @@
-public class Mahasiswademo12 {
+import java.util.Scanner;
+
+public class MahasiswaDemo12 {
     public static void main(String[] args) {
- 
+        Scanner sc = new Scanner(System.in);
         MahasiswaBerprestasi12 mb = new MahasiswaBerprestasi12();
- 
-     
-        Mahasiswa12 mhs1 = new Mahasiswa12("001", "Andi",    "TI-1A", 3.75);
-        Mahasiswa12 mhs2 = new Mahasiswa12("002", "Budi",    "TI-1A", 3.50);
-        Mahasiswa12 mhs3 = new Mahasiswa12("003", "Citra",   "TI-1B", 3.90);
-        Mahasiswa12 mhs4 = new Mahasiswa12("004", "Dewi",    "TI-1B", 3.20);
-        Mahasiswa12 mhs5 = new Mahasiswa12("005", "Eko",     "TI-1A", 3.65);
- 
-        mb.tambah(mhs1);
-        mb.tambah(mhs2);
-        mb.tambah(mhs3);
-        mb.tambah(mhs4);
-        mb.tambah(mhs5);
- 
-        System.out.println("====== DATA SEBELUM SORTING ======");
+        
+        System.out.println("Masukkan jumlah mahasiswa: ");
+        int jumMhs = sc.nextInt();
+        sc.nextLine(); 
+
+        for (int i = 0; i < jumMhs; i++) {
+            System.out.println("--- Data Mahasiswa ke-" + (i + 1) + " ---");
+            System.out.print("NIM   : ");
+            String nim = sc.nextLine();
+            System.out.print("Nama  : ");
+            String nama = sc.nextLine();
+            System.out.print("Kelas : ");
+            String kelas = sc.nextLine();
+            System.out.print("IPK   : ");
+            double ipk = sc.nextDouble();
+            sc.nextLine(); 
+
+            mb.tambah(new Mahasiswa12(nim, nama, kelas, ipk));
+        }
+
         mb.tampil();
- 
-        mb.bubbleSort();
-        System.out.println("====== SETELAH BUBBLE SORT (Descending IPK) ======");
-        mb.tampil();
-        mb.selectionSort();
-        System.out.println("====== SETELAH SELECTION SORT (Ascending IPK) ======");
-        mb.tampil();
-        mb.insertionSort();
-        System.out.println("====== SETELAH INSERTION SORT (Ascending IPK) ======");
-        mb.tampil();
+
+        System.out.println("\n=== Pencarian Data Mahasiswa ===");
+        System.out.println("Masukkan IPK mahasiswa yang ingin dicari: ");
+        System.out.print("Ipk : ");
+        double cari = sc.nextDouble();
+
+        System.out.println("Menggunakan Sequential Searching");
+        double posisi = mb.sequentialSearching(cari);
+        int pss = (int) posisi;
+        mb.tampilPosisi(cari, pss);
+        mb.tampilDataSearch(cari, pss);
+
+        System.out.println("Pencarian data");
+        System.out.println("Masukkan IPK mahasiswa yang ingin dicari: ");
+        System.out.print("Ipk : ");
+        double cari2 = sc.nextDouble();
+
+        System.out.println("Menggunakan Binary Searching");
+        double posisi2 = mb.findBinarySearch(cari2, 0, jumMhs - 1);
+        int pss2 = (int) posisi2;
+        mb.tampilPosisi(cari, pss2);
+        mb.tampilDataSearch(cari, pss2);
+
+        sc.close();
     }
 }
- 
